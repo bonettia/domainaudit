@@ -71,8 +71,4 @@ pip  install  -r  requirements.txt
 
 ## TODO
 
-- DNS records (A, MX, TXT)
-
-- SSL expiry in days instead of raw date
-
 - Color coded output

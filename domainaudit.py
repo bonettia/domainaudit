@@ -3,14 +3,21 @@ from rich.table import Table
 from rich.console import Console
 from datetime import datetime
 
+
+full_dns = False
+helptext = "Usage: python domainaudit.py <domain> [--full-dns]"
 try:
     domain = sys.argv[1]
+    for arg in sys.argv[2:]:
+        if arg=="--full-dns":
+            full_dns = True
+        elif arg=="--help":
+            print(helptext)
+            sys.exit(0)
 except IndexError:
-    print("Usage: python domainaudit.py <domain>")
+    print(helptext)
     sys.exit(1)
 
-
-print(f"Running domain audit for {domain}...")
 
 
 ctx = ssl.create_default_context()
@@ -22,7 +29,7 @@ with ctx.wrap_socket(socket.socket(), server_hostname=domain) as s:
 
 headers = requests.get(f"https://{domain}").headers
 records = {}
-record_types = ["A", "AAAA", "MX", "NS", "CNAME"]
+record_types = ["A", "AAAA", "MX", "NS", "CNAME", "TXT", "SRV", "PTR", "SOA", "CAA"] if full_dns else ["A", "AAAA", "MX", "NS", "CNAME"]
 for record_type in record_types:
     try:
         records[record_type] = pydig.query(domain, record_type)
@@ -33,8 +40,7 @@ for record_type in record_types:
 
 
 
-expiry = datetime.strptime(cert["notAfter"], "%b %d %H:%M:%S %Y %Z")
-days_remaining = (expiry - datetime.utcnow()).days
+days_remaining = (datetime.strptime(cert["notAfter"], "%b %d %H:%M:%S %Y %Z") - datetime.now()).days
 
 table = Table(title=domain, show_lines=True)
 table.add_column("Check", style="cyan", no_wrap=True)

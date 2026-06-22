@@ -42,7 +42,9 @@ python  domainaudit.py  github.com
 
 ```
 
-  
+## Example output
+
+![domainaudit output](assets/image.png)
 
 ## Requirements
 

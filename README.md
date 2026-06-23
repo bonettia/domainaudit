@@ -26,7 +26,7 @@ A CLI tool that performs a quick security audit on a domain.
 | SRV Records | Service records |
 | PTR Records | Reverse lookup records |
 | SOA Records | Start of authority records |Certification Authority Authorization
-| SOA Records | Certification Authority Authorization records |
+| CAA Records | Certification Authority Authorization records |
 
 
   

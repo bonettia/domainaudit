@@ -40,6 +40,13 @@ A CLI tool that performs a quick security audit on a domain.
 python  domainaudit.py
 
 ```
+for full dns records output
+
+```bash
+
+python  domainaudit.py --full-dns
+
+```
 
   
 
